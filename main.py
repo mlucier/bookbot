@@ -31,17 +31,28 @@ def count_characters(text):
 
     return lowercase_dict
 
-def main():
-    file_contents = open_file("books/frankenstein.txt")
+def sort_on(dict):
+    return dict["count"]
 
-    print("---BEGIN REPORT---")
+def main():
+    file_string = "books/frankenstein.txt"
+    file_contents = open_file(file_string)
+
+    print(f"--- Begin report of {file_string} ---")
     print(str(count_words(file_contents)) + " words found in the document")
+    print("")
 
     character_count = count_characters(file_contents)
+    character_count_list = []
 
-    for char_key in character_count:
-        print("The character " + char_key + " was found " + str(character_count[char_key]) + " times")
+    for key in character_count:
+        character_count_list.append({"char": key, "count": character_count[key]})
 
-    print("---END REPORT---")
+    character_count_list.sort(reverse=True, key=sort_on)
+
+    for char in character_count_list:
+        print("The character '" + char["char"] + "' was found " + str(char["count"]) + " times")
+
+    print("--- End report ---")
 
 main()
